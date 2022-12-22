@@ -16,8 +16,16 @@ class IdRefresherParameters{
     this.deleteButtonId = deleteButtonId;
   }
 }
-const defaultIdParameters = new IdRefresherParameters(allSections, 'section', 'delete');
+const defaultIds = new IdRefresherParameters(allSections, 'section', 'delete');
 
+class DeleteElementParameters{
+  constructor(element, selector){
+    this.element = element;
+    this.selector = selector;
+  }
+}
+
+const defaultDelete = new DeleteElementParameters(this, 'section')
 
 
 
@@ -25,6 +33,15 @@ const defaultIdParameters = new IdRefresherParameters(allSections, 'section', 'd
 //sectionTotal = Object or array being inserted being used for its length.
 //containerId = Name of the id being inserted for the created section.
 //deleteButtonId = Name of the id being inserted for the delete button.
+function idRefresher2(idParameters){
+  for (let i = 0; i < idParameters.sectionTotal.length; i++){
+    idParameters.sectionTotal[i].id = idParameters.containerId + "-" + (i + 1);
+    idParameters.sectionTotal[i].querySelector('button').id = idParameters.deleteButtonId + "-" + (i + 1);
+    idParameters.sectionTotal[i].querySelector('input[type="url"]').id = "url" + "-" + (i + 1);
+    idParameters.sectionTotal[i].querySelector('input[type="text"]').id = "title" + "-" + (i + 1);
+  }
+}
+
 function idRefresher(sectionTotal, containerId, deleteButtonId){
   for (let i = 0; i < sectionTotal.length; i++){
     sectionTotal[i].id = containerId + "-" + (i + 1);
@@ -37,6 +54,12 @@ function idRefresher(sectionTotal, containerId, deleteButtonId){
 /*Function to find an element, go up its node tree and remove it from the DOM.*/
 //element = Where the .closest begins its search.
 //selector = The selector that points to where the search will conclude like a queryselector.
+function deleteHandler2(element, idParameters, deleteParameters) {
+  element.closest(deleteParameters.selector).remove();
+  idRefresher(idParameters)
+}
+
+
 function deleteHandler(element, selector, sectionTotal, deleteButtonId) {
   element.closest(selector).remove();
   idRefresher(allSections, sectionTotal, deleteButtonId)
@@ -72,7 +95,7 @@ createSectionButton.addEventListener('click', (e)=>{
 
 
 
-  function createSectionTwo(containerClassName, containerDataName, sectionTotal, deleteButtonId) {
+  function createSectionTwo(containerClassName, containerDataName, idParameters, deleteParameters) {
     incrementCount++; 
     const newSectionNew =
     `<div class="${containerClassName}" id="" ${containerDataName}="${incrementCount}">
@@ -86,13 +109,12 @@ createSectionButton.addEventListener('click', (e)=>{
         <label for="">Section Summary: </label><br>
         <textarea rows="5" cols="80" id="" placeholder="" name="" required></textarea><br>
       </div>
-      <button class="delete-btn" onclick="deleteHandler(this, '[${containerDataName}]', '${containerClassName}', '${deleteButtonId}')">DeleteNEW</button>
+      <button class="delete-btn" onclick="deleteHandler(this, ${idParameters}, ${deleteParameters})">DeleteNEW</button>
     </div>`;
     mainContainer.insertAdjacentHTML('beforeend', newSectionNew);
-    idRefresher(sectionTotal, containerClassName, deleteButtonId);
-    console.log(sectionTotal)
+    idRefresher2(idParameters);
   }
 
   createSectionButton2.addEventListener('click', (e)=>{
     e.preventDefault()
-    createSectionTwo('section', 'data-section-iid', allSections, 'delete')});
+    createSectionTwo('section', 'data-section-iid', defaultIds, defaultDelete)});
