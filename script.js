@@ -63,7 +63,7 @@ the id's of the current elements.*/
 //sectionTotal = Variable of array-like object of all the sections. Used for its length in callback function.
 //deleteButtonId = The ID of the created element without the number. For the delete button id. For the callback.
 //selector = Where the .remove ends its search in the callback.
-  function createSection(createParameters, idParameters, deleteParameters) {
+  function createSection(createParameters, idParameters) {
     incrementCount++; 
     const newSectionNew =
     `<div class="${createParameters.containerClassName}" id="" ${createParameters.containerDataName}="${incrementCount}">
@@ -87,4 +87,4 @@ the id's of the current elements.*/
 //e.preventDefault was needed to stop the function running on page load.
   createSectionButton.addEventListener('click', (e)=>{
     e.preventDefault()
-    createSection(defaultCreate, defaultIds, defaultDelete)});
+    createSection(defaultCreate, defaultIds)});
