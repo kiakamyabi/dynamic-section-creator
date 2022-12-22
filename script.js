@@ -9,6 +9,18 @@ const allSections = document.getElementsByClassName('section');
 //Variable to track how many sections are created. Incremented once per section creation.
 let incrementCount = 0;
 
+class IdRefresherParameters{
+  constructor(sectionTotal, containerId, deleteButtonId){
+    this.sectionTotal = sectionTotal;
+    this.containerId = containerId;
+    this.deleteButtonId = deleteButtonId;
+  }
+}
+const defaultIdParameters = new IdRefresherParameters(allSections, 'section', 'delete');
+
+
+
+
 /*Resets the id based on the length of the object or array. Starts at +1 because indexed at zero.*/
 //sectionTotal = Object or array being inserted being used for its length.
 //containerId = Name of the id being inserted for the created section.
