@@ -1,3 +1,7 @@
+//#region To Do
+//Validate all inputs and the functions. Add accordion.
+//#endregion
+
 //#region General Variables
 //Variable for the div that represents a form. Used as the location for inserting HTML into the DOM.
 const mainContainer = document.getElementById('main-container');
@@ -11,17 +15,22 @@ let incrementCount = 0;
 //#endregion
 //#region Parameter Classes & Objects
 class IdRefresherParameters{
-  constructor(sectionTotal, containerId, deleteButtonId, urlId, titleId, summaryId){
+  constructor(sectionTotal, containerId, deleteButtonId, urlId, titleId, summaryId, titlePlaceholder, urlPlaceholder, summaryPlaceholder){
     this.sectionTotal = sectionTotal;
     this.containerId = containerId;
     this.deleteButtonId = deleteButtonId;
+
     this.urlId = urlId;
+    this.urlPlaceholder = urlPlaceholder;
+
     this.titleId = titleId;
+    this.titlePlaceholder = titlePlaceholder;
+
     this.summaryId = summaryId;
+    this.summaryPlaceholder = summaryPlaceholder;
   }
 }
-const defaultIds = new IdRefresherParameters(allSections, '.section', 'delete', 'url', 'title', 'summary');
-
+const defaultIds = new IdRefresherParameters(allSections, '.section', 'delete', 'url', 'title', 'summary', 'e.g. Project Title', 'e.g. www.emad.com', 'e.g. Summary placeholder information');
 class DeleteElementParameters{
   constructor(element, selector){
     this.element = element;
@@ -46,19 +55,31 @@ const defaultCreate = new CreateElementParameters('section', 'data-section-iid')
 //deleteButtonId = Name of the id being inserted for the delete button.
 function idRefresher(idParameters){
   const sectionTotal = idParameters.sectionTotal;
-  const urlIdName = idParameters.urlId;
-  const titleIdName = idParameters.titleId;
-  const summaryIdName = idParameters.summaryId;
 
-  for (let i = 0; i < idParameters.sectionTotal.length; i++){
+  const urlIdName = idParameters.urlId;
+  const urlPlaceholder = idParameters.urlPlaceholder;
+
+  const titleIdName = idParameters.titleId;
+  const titlePlaceholder = idParameters.titlePlaceholder;
+
+  const summaryIdName = idParameters.summaryId;
+  const summaryPlaceholder = idParameters.summaryPlaceholder;
+
+  for (let i = 0; i < sectionTotal.length; i++){
     sectionTotal[i].id = idParameters.containerId + "-" + (i + 1);
     sectionTotal[i].querySelector('button').id = idParameters.deleteButtonId + "-" + (i + 1);
+
     sectionTotal[i].querySelector('input[type="url"]').id = urlIdName + "-" + (i + 1);
     sectionTotal[i].querySelector('.url-label').setAttribute('for', urlIdName + "-" + (i + 1));
+    sectionTotal[i].querySelector('input[type="url"]').placeholder = urlPlaceholder;
+
     sectionTotal[i].querySelector('input[type="text"]').id = titleIdName + "-" + (i + 1);
     sectionTotal[i].querySelector('.title-label').setAttribute('for', titleIdName + "-" + (i + 1));
+    sectionTotal[i].querySelector('input[type="text"]').placeholder = titlePlaceholder;
+
     sectionTotal[i].querySelector('textarea').id = summaryIdName + "-" + (i + 1);
     sectionTotal[i].querySelector('.summary-label').setAttribute('for', summaryIdName + "-" + (i + 1));
+    sectionTotal[i].querySelector('textarea').placeholder = summaryPlaceholder;
     
     allDeleteButtons[i].addEventListener('click', function() {
       deleteHandler(this, defaultIds, defaultDelete);});
