@@ -4,15 +4,20 @@
 
 //#region General Variables
 //Variable for the div that represents a form. Used as the location for inserting HTML into the DOM.
-const mainContainer = document.getElementById('main-container');
+const accordionContent1 = document.getElementById('accordion-content-1');
 //Variable for the button that activates the function that creates the sections.
-const createSectionButton = document.getElementById('create-section-btn');
+const createSectionButton = document.getElementById('create-section-btn-1');
 //Variable for an array-like object based on the amount of section classes. Used for its length. Updated in real time.
 const allSections = document.getElementsByClassName('section');
 const allDeleteButtons = document.getElementsByClassName('delete-btn');
 //Variable to track how many sections are created. Incremented once per section creation.
 let incrementCount = 0;
+//Variable for array-like object of all accordion buttons which represent the opening and closing tab of accordions.
+const allAccordions = document.getElementsByClassName('accordion__button');
+
+const allAccordionContent = document.getElementsByClassName('accordion__content')
 //#endregion
+
 //#region Parameter Classes & Objects
 class IdRefresherParameters{
   constructor(sectionTotal, containerId, deleteButtonId, urlId, titleId, summaryId, titlePlaceholder, urlPlaceholder, summaryPlaceholder){
@@ -30,7 +35,7 @@ class IdRefresherParameters{
     this.summaryPlaceholder = summaryPlaceholder;
   }
 }
-const defaultIds = new IdRefresherParameters(allSections, '.section', 'delete', 'url', 'title', 'summary', 'e.g. Project Title', 'e.g. www.emad.com', 'e.g. Summary placeholder information');
+const defaultIds = new IdRefresherParameters(allSections, 'section', 'delete', 'url', 'title', 'summary', 'e.g. Project Title', 'e.g. www.google.com', 'e.g. Summary placeholder information');
 class DeleteElementParameters{
   constructor(element, selector){
     this.element = element;
@@ -84,6 +89,12 @@ function idRefresher(idParameters){
     allDeleteButtons[i].addEventListener('click', function() {
       deleteHandler(this, defaultIds, defaultDelete);});
   }
+
+  for (i = 0; i < allAccordionContent.length; i++) {
+    if (allAccordionContent[i].style.maxHeight){
+      allAccordionContent[i].style.maxHeight = allAccordionContent[i].scrollHeight + "px";
+    }
+  }
 }
 
 /*Function to find an element, go up its node tree and remove it from the DOM.*/
@@ -112,15 +123,15 @@ function createSection(createParameters, idParameters) {
       <label class="title-label" for="">Section Title: </label>
       <input type="text"  name="" id="" placeholder="" required>
       <label class="url-label" for="testing">URL: </label>
-      <input type="url" name="Jimmy" id="" size="41" placeholder=""><br>
+      <input type="url" name="" id="" size="41" placeholder=""><br>
     </div>
     <div>
       <label class="summary-label" for="">Section Summary: </label><br>
-      <textarea rows="5" cols="80" id="" placeholder="" name="" required></textarea><br>
+      <textarea rows="5" cols="100" id="" placeholder="" name="" required></textarea><br>
     </div>
-    <button class="delete-btn">Delete</button>
+    <button class="delete-btn">X</button>
   </div>`;
-  mainContainer.insertAdjacentHTML('beforeend', newSectionNew);
+  accordionContent1.insertAdjacentHTML('beforeend', newSectionNew);
   idRefresher(idParameters);
 }
 
@@ -130,3 +141,14 @@ createSectionButton.addEventListener('click', (e)=>{
   e.preventDefault()
   createSection(defaultCreate, defaultIds)});
 
+for (i = 0; i < allAccordions.length; i++) {
+  allAccordions[i].addEventListener("click", function() {
+    this.classList.toggle("accordion__button--active");
+    let panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}

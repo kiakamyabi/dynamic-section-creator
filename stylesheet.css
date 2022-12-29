@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&display=swap');
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:'Manrope', sans-serif;
+}
+body{
+  background-color: white;
+}
+.accordion__button {
+  background-color: #aa9b8d;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  font-size: 2rem;
+  text-shadow: 1px 1px black;
+}
+.accordion__button::after {
+  content:'\25be';
+  float: right;
+  transform: scale(1.5);
+}
+.accordion__button--active, .accordion__button:hover{
+  background:#8d7a69;
+}
+.accordion__button--active::after {
+  content:'\25b4';
+}
+.accordion__content{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+.section{
+  padding: 25px;
+  text-align: center;
+}
+.section > div{
+  padding: 12px;
+}
+/* .section > div *{
+  padding: 12px;
+} */
+.create-section-btn{
+  padding: 10px 20px;
+  margin: 10px;
+}
+.delete-btn{
+  padding: 2px 9px;
+}
