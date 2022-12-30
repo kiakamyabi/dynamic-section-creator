@@ -35,11 +35,11 @@ body{
 .accordion__content{
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.2s ease-out;
+  transition: max-height 0.4s ease-out;
 }
 .section{
   padding: 25px;
-  text-align: center;
+  text-align: left;
 }
 .section > div{
   padding: 12px;

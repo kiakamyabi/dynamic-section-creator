@@ -141,14 +141,17 @@ createSectionButton.addEventListener('click', (e)=>{
   e.preventDefault()
   createSection(defaultCreate, defaultIds)});
 
-for (i = 0; i < allAccordions.length; i++) {
-  allAccordions[i].addEventListener("click", function() {
-    this.classList.toggle("accordion__button--active");
-    let panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
+function accordionFunction() {
+  for (i = 0; i < allAccordions.length; i++) {
+    allAccordions[i].addEventListener("click", function() {
+      this.classList.toggle("accordion__button--active");
+      let panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    });
+  }
 }
+accordionFunction()
