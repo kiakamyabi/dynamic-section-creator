@@ -1,10 +1,12 @@
 //#region To Do
-//Validate all inputs and the functions. Add accordion.
+//Validate all inputs and the functions.
+//Add resize event listener for accordion.
+//resize: none; < Remove resize for textarea.
 //#endregion
 
 //#region General Variables
 //Variable for the div that represents a form. Used as the location for inserting HTML into the DOM.
-const accordionContent1 = document.getElementById('accordion-content-1');
+const accordionContent1 = document.getElementById('accordion-content-container-1');
 //Variable for the button that activates the function that creates the sections.
 const createSectionButton = document.getElementById('create-section-btn-1');
 //Variable for an array-like object based on the amount of section classes. Used for its length. Updated in real time.
@@ -35,7 +37,7 @@ class IdRefresherParameters{
     this.summaryPlaceholder = summaryPlaceholder;
   }
 }
-const defaultIds = new IdRefresherParameters(allSections, 'section', 'delete', 'url', 'title', 'summary', 'e.g. Project Title', 'e.g. www.google.com', 'e.g. Summary placeholder information');
+const defaultIds = new IdRefresherParameters(allSections, 'section', 'delete', 'url', 'title', 'summary', 'e.g. Section Title', 'e.g. www.website.com', 'e.g. Summary placeholder information');
 class DeleteElementParameters{
   constructor(element, selector){
     this.element = element;
@@ -119,17 +121,21 @@ function createSection(createParameters, idParameters) {
   incrementCount++; 
   const newSectionNew =
   `<div class="${createParameters.containerClassName}" id="" ${createParameters.containerDataName}="${incrementCount}">
-    <div>
-      <label class="title-label" for="">Section Title: </label>
-      <input type="text"  name="" id="" placeholder="" required>
-      <label class="url-label" for="testing">URL: </label>
-      <input type="url" name="" id="" size="41" placeholder=""><br>
-    </div>
+    <div class="test-class-1">
+      <div class="title-container">
+        <label class="title-label" for="">Section Title: </label>
+        <input type="text"  name="" id="" placeholder="" required>
+      </div>
+      <div class="url-container">
+        <label class="url-label" for="testing">URL: </label>
+        <input type="url" name="" id="" size="41" placeholder=""><br>
+      </div>
+      <button class="delete-btn">Remove</button>
+      </div>
     <div>
       <label class="summary-label" for="">Section Summary: </label><br>
       <textarea rows="5" cols="100" id="" placeholder="" name="" required></textarea><br>
     </div>
-    <button class="delete-btn">X</button>
   </div>`;
   accordionContent1.insertAdjacentHTML('beforeend', newSectionNew);
   idRefresher(idParameters);
@@ -138,7 +144,6 @@ function createSection(createParameters, idParameters) {
 //Adds an event listener for clicking on the button used to create a section and then runs the function.
 //e.preventDefault was needed to stop the function running on page load.
 createSectionButton.addEventListener('click', (e)=>{
-  e.preventDefault()
   createSection(defaultCreate, defaultIds)});
 
 function accordionFunction() {
@@ -155,3 +160,11 @@ function accordionFunction() {
   }
 }
 accordionFunction()
+function accordionResize(){
+  for (i = 0; i < allAccordionContent.length; i++) {
+    if (allAccordionContent[i].style.maxHeight){
+      allAccordionContent[i].style.maxHeight = allAccordionContent[i].scrollHeight + "px";
+    }
+  }
+}
+window.addEventListener('resize', accordionResize)
