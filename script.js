@@ -10,8 +10,8 @@ const accordionContent1 = document.getElementById('accordion-content-container-1
 //Variable for the button that activates the function that creates the sections.
 const createSectionButton = document.getElementById('create-section-btn-1');
 //Variable for an array-like object based on the amount of section classes. Used for its length. Updated in real time.
-const allSections = document.getElementsByClassName('section');
-const allDeleteButtons = document.getElementsByClassName('delete-btn');
+const allSections = document.getElementsByClassName('accordion__section');
+const allDeleteButtons = document.getElementsByClassName('accordion__delete');
 //Variable to track how many sections are created. Incremented once per section creation.
 let incrementCount = 0;
 //Variable for array-like object of all accordion buttons which represent the opening and closing tab of accordions.
@@ -44,7 +44,7 @@ class DeleteElementParameters{
     this.selector = selector;
   }
 }
-const defaultDelete = new DeleteElementParameters(this, '.section')
+const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
 
 class CreateElementParameters{
   constructor(containerClassName, containerDataName){
@@ -52,7 +52,7 @@ class CreateElementParameters{
     this.containerDataName = containerDataName;
   }
 }
-const defaultCreate = new CreateElementParameters('section', 'data-section-iid')
+const defaultCreate = new CreateElementParameters('accordion__section', 'data-section-iid')
 //#endregion
 
 /*Resets the id based on the length of the object or array. Starts at +1 because indexed at zero.*/
@@ -122,15 +122,15 @@ function createSection(createParameters, idParameters) {
   const newSectionNew =
   `<div class="${createParameters.containerClassName}" id="" ${createParameters.containerDataName}="${incrementCount}">
     <div class="test-class-1">
-      <div class="title-container">
+      <div class="accordion__section__title-container">
         <label class="title-label" for="">Section Title: </label>
         <input type="text"  name="" id="" placeholder="" required>
       </div>
-      <div class="url-container">
+      <div class="accordion__section__url-container">
         <label class="url-label" for="testing">URL: </label>
         <input type="url" name="" id="" size="41" placeholder=""><br>
       </div>
-      <button class="delete-btn">Remove</button>
+      <button type="button" class="accordion__delete">Remove</button>
       </div>
     <div>
       <label class="summary-label" for="">Section Summary: </label><br>
