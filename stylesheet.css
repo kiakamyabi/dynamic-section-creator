@@ -4,6 +4,7 @@
   --color-primary:#aa9b8d;
   --color-primary-dark:#8d7a69;
   --color-section:white;
+  --color-button-hover:white;
   --font-family-primary:'Manrope', sans-serif;
   --accordion-open:'\25b4';
   --accordion-close:'\25be';
@@ -33,7 +34,7 @@ body{
   border: none;
   border-bottom: 3px solid var(--color-primary-dark);
 
-  color: white;
+  color: var(--color-button-hover);
   font-size: 2rem;
   text-shadow: 1px 1px black;
   text-align: center;
@@ -51,7 +52,7 @@ body{
   content:var(--accordion-open);
 }
 .accordion__button--active, .accordion__button:hover{
-  background:var(--color-primary-dark);
+  background-color:var(--color-primary-dark);
 }
 
 .accordion__content{
@@ -66,19 +67,32 @@ body{
   text-align: center;
   border-bottom: var(--color-primary-dark) solid 2px;
 }
-.accordion__create{
+[id^="create-section-btn"]{
   padding: 10px 20px;
   margin: 5px;
   border: black solid 1px;
   border-radius: 0.8rem;
 }
-.accordion__create:hover{
+[id^="create-section-btn"]:hover{
   border: var(--color-primary-dark) solid 1px;
   border-radius: 0.8rem;
-  color: white;
+  color: var(--color-button-hover);
   background:var(--color-primary-dark);
   transition: 0.2s;
 }
+/* .accordion__create{
+  padding: 10px 20px;
+  margin: 5px;
+  border: black solid 1px;
+  border-radius: 0.8rem;
+} */
+/* .accordion__create:hover{
+  border: var(--color-primary-dark) solid 1px;
+  border-radius: 0.8rem;
+  color: var(--color-button-hover);
+  background:var(--color-primary-dark);
+  transition: 0.2s;
+} */
 
 .accordion__delete{
   padding: 2px 9px;
@@ -87,7 +101,7 @@ body{
 }
 .accordion__delete:hover{
   padding: 2px 9px;
-  color: white;
+  color: var(--color-button-hover);
   background:var(--color-primary-dark);
   border: var(--color-primary-dark) solid 1px;
   transition: 0.2s;
@@ -96,10 +110,4 @@ body{
   display: flex;
   gap: 2rem;
   justify-content: center;
-}
-#accordion-content-container-1{
-  text-align: center;
-}
-#url-1{
-
 }
