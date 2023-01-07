@@ -4,30 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="script.js" defer></script>
-    <title>Dynamic Section Creator</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        padding: 2rem;
-      }
-      .container {
-        max-width: 420px;
-        margin-inline: auto;
-      }
-      .section {
-        background-color: lightgoldenrodyellow;
-        border: 1px solid black;
-        margin-bottom: 2rem;
-        padding: 1rem;
-      }
-    </style>
+    <script defer src="script.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Dynamic Section Creator 2.0</title>
   </head>
   <body>
-      <div class="container">
-        <h1>Section Creator</h1>
-        <div id="form"></div>
-        <button id="create-section-btn">Create section</button>
+
+    <form>
+      <div class="accordion">
+        <button type="button" class="accordion__button">Section 1</button>
+        <div class="accordion__content" id="accordion-content-1">
+          <div id="accordion-content-container-1">
+            <!--Added sections go here-->
+          </div>
+          <button type="button" id="create-section-btn-1">Create section</button>
+        </div>
       </div>
+    </form>
+
   </body>
 </html>

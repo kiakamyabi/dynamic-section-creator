@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&display=swap');
+
+:root{
+  --color-primary:#aa9b8d;
+  --color-primary-dark:#8d7a69;
+  --color-section:white;
+  --color-button-hover:white;
+  --font-family-primary:'Manrope', sans-serif;
+  --accordion-open:'\25b4';
+  --accordion-close:'\25be';
+}
+
+*,
+*::after,
+*::before{
+  box-sizing: border-box;
+}
+*{
+  margin:0;
+  padding: 0;
+  font:inherit;
+}
+body{
+  background-color: var(--color-primary);
+  font-family: var(--font-family-primary);
+}
+textarea {
+  resize: none;
+}
+input{
+  width: 100%;
+}
+.accordion__button{
+  background-color: var(--color-primary);
+  cursor: pointer;
+
+  padding: 1rem;
+  width: 100%;
+  border: none;
+  border-bottom: 3px solid var(--color-primary-dark);
+
+  color: var(--color-button-hover);
+  font-size: 2rem;
+  text-shadow: 1px 1px black;
+  text-align: center;
+
+  transition: 0.3s;
+
+  position: relative;
+}
+.accordion__button::after {
+  content:var(--accordion-close);
+  float: right;
+  transform: scale(1.5);
+}
+.accordion__button--active::after {
+  content:var(--accordion-open);
+}
+.accordion__button--active, .accordion__button:hover{
+  background-color:var(--color-primary-dark);
+}
+
+.accordion__content{
+  background-color: var(--color-section);
+  max-height: 0;
+  overflow: hidden;
+  text-align: center;
+  transition: max-height 0.3s ease-out;
+}
+.accordion__content > button {
+  padding: 0.7em 1.3em;
+  margin: 0.4em;
+  border: black solid 1px;
+  border-radius: 0.8em;
+}
+.accordion__content > button:hover{
+  border: var(--color-primary-dark) solid 1px;
+  color: var(--color-button-hover);
+  background:var(--color-primary-dark);
+  transition: 0.2s;
+}
+.accordion__section{
+  padding: 0.8rem;
+  text-align: center;
+  border-bottom: var(--color-primary-dark) solid 2px;
+}
+
+.accordion__delete{
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.4rem;
+  border: black solid 1px;
+}
+.accordion__delete:hover{
+  color: var(--color-button-hover);
+  background:var(--color-primary-dark);
+  border: var(--color-primary-dark) solid 1px;
+  transition: 0.2s;
+}
+.accordion__section > :nth-child(1){
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.accordion__section > :nth-child(2){
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: 6px 0;
+}
