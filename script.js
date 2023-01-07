@@ -15,8 +15,17 @@ const allAccordionContent = document.getElementsByClassName('accordion__content'
 //#endregion
 
 //#region Parameter Classes & Objects
+class DeleteElementParameters{
+  constructor(element, selector){
+    this.element = element;
+    this.selector = selector;
+  }
+}
+
 class IdRefresherParameters{
-  constructor(sectionTotal, containerId, deleteButtonId, urlId, titleId, summaryId, titlePlaceholder, urlPlaceholder, summaryPlaceholder){
+  constructor(deleteParameters, sectionTotal, containerId, deleteButtonId, urlId, titleId, summaryId, titlePlaceholder, urlPlaceholder, summaryPlaceholder){
+    this.deleteParameters = deleteParameters;
+
     this.sectionTotal = sectionTotal;
     this.containerId = containerId;
     this.deleteButtonId = deleteButtonId;
@@ -31,15 +40,6 @@ class IdRefresherParameters{
     this.summaryPlaceholder = summaryPlaceholder;
   }
 }
-const defaultIds = new IdRefresherParameters(allSections, 'section', 'delete', 'url', 'title', 'summary', 'e.g. Section Title', 'e.g. www.website.com', 'e.g. Summary placeholder information');
-
-class DeleteElementParameters{
-  constructor(element, selector){
-    this.element = element;
-    this.selector = selector;
-  }
-}
-const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
 
 class CreateElementParameters{
   constructor(sectionClassName, sectionDataName, sectionInsertPoint){
@@ -48,6 +48,10 @@ class CreateElementParameters{
     this.sectionInsertPoint = sectionInsertPoint;
   }
 }
+
+const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
+const defaultIds = new IdRefresherParameters(defaultDelete, allSections, 'section', 'delete', 'url',
+ 'title', 'summary', 'e.g. Section Title', 'e.g. www.website.com', 'e.g. Summary placeholder information');
 const defaultCreate = new CreateElementParameters('accordion__section', 'data-section-iid', accordionContentContainer1)
 //#endregion
 
@@ -90,7 +94,7 @@ function idRefresher(idParameters){
     sectionTotal[i].querySelector('textarea').placeholder = summaryPlaceholder;
     
     allDeleteButtons[i].addEventListener('click', function() {
-      deleteHandler(this, defaultIds, defaultDelete);});
+      deleteHandler(this, idParameters, idParameters.deleteParameters);});
   }
 
   for (i = 0; i < allAccordionContent.length; i++) {
@@ -145,7 +149,7 @@ function createSection(createParameters, idParameters) {
   createParameters.sectionInsertPoint.insertAdjacentHTML('beforeend', newSectionNew);
   idRefresher(idParameters);
 }
-
+/*Adds the toggle to the accordion button to allow it to drop down and go up. */
 function accordionFunction() {
   for (i = 0; i < allAccordions.length; i++) {
     allAccordions[i].addEventListener("click", function() {
