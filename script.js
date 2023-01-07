@@ -1,11 +1,6 @@
-//#region To Do & Notes
-//resize: none; < Remove resize for textarea.
-//#endregion
-
 //#region General Variables
-//Variable for the div that represents a form. Used as the location for inserting HTML into the DOM.
+//Variable for the div that represents the inside of an accordion. Used as the location for inserting HTML into the DOM.
 const accordionContentContainer1 = document.getElementById('accordion-content-container-1');
-
 //Variable for the button that activates the function that creates the sections.
 const createSectionButton = document.getElementById('create-section-btn-1');
 //Variable for an array-like object based on the amount of section classes. Used for its length. Updated in real time.
@@ -15,7 +10,7 @@ const allDeleteButtons = document.getElementsByClassName('accordion__delete');
 let incrementCount = 0;
 //Variable for array-like object of all accordion buttons which represent the opening and closing tab of accordions.
 const allAccordions = document.getElementsByClassName('accordion__button');
-
+//Variable for array-like object of all accordion content containers to easily adjust the height later.
 const allAccordionContent = document.getElementsByClassName('accordion__content')
 //#endregion
 
@@ -47,12 +42,13 @@ class DeleteElementParameters{
 const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
 
 class CreateElementParameters{
-  constructor(containerClassName, containerDataName){
-    this.containerClassName = containerClassName;
-    this.containerDataName = containerDataName;
+  constructor(sectionClassName, sectionDataName, sectionInsertPoint){
+    this.sectionClassName = sectionClassName;
+    this.sectionDataName = sectionDataName;
+    this.sectionInsertPoint = sectionInsertPoint;
   }
 }
-const defaultCreate = new CreateElementParameters('accordion__section', 'data-section-iid')
+const defaultCreate = new CreateElementParameters('accordion__section', 'data-section-iid', accordionContentContainer1)
 //#endregion
 
 /*Resets the id based on the length of an array-like object. Starts at +1 because normally indexed at zero.*/
@@ -120,42 +116,35 @@ function deleteHandler(element, idParameters, deleteParameters) {
 html elements and then inserts it into the DOM at a specific location. Then uses the callback function to reset all
 the id's of the current elements.*/
 //Parameters:
-//containerClassName = The class name of the section. Also used for the ID in the callback.
-//containerDataName = The name of the dataset of the main div element that gets inserted into the DOM.
-//sectionTotal = Variable of array-like object of all the sections. Used for its length in callback function.
-//deleteButtonId = The ID of the created element without the number. For the delete button id. For the callback.
-//selector = Where the .remove ends its search in the callback.
+//*ClassName = The class name of the section.
+//*DataName = The name of the dataset.
+//SectionInsertPoint = The location where the created HTML is placed.
 function createSection(createParameters, idParameters) {
   if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters');
   }
   incrementCount++; 
   const newSectionNew =
-  `<div class="${createParameters.containerClassName}" id="" ${createParameters.containerDataName}="${incrementCount}">
-    <div class="accordion__section-container">
-      <div class="accordion__section__title-container">
+  `<div class="${createParameters.sectionClassName}" id="" ${createParameters.sectionDataName}="${incrementCount}">
+    <div>
+      <div>
         <label class="title-label" for="">Section Title: </label>
         <input type="text"  name="" id="" placeholder="" required>
       </div>
-      <div class="accordion__section__url-container">
+      <div>
         <label class="url-label" for="testing">URL: </label>
-        <input type="url" name="" id="" size="41" placeholder=""><br>
+        <input type="url" name="" id="" size="41" placeholder="">
       </div>
-      <button type="button" class="accordion__delete">Remove</button>
+      <button type="button" class="accordion__delete">X</button>
       </div>
     <div>
-      <label class="summary-label" for="">Section Summary: </label><br>
-      <textarea rows="5" cols="100" id="" placeholder="" name="" required></textarea><br>
+      <label class="summary-label" for="">Section Summary: </label>
+      <textarea rows="5" cols="" id="" placeholder="" name="" required></textarea>
     </div>
   </div>`;
-  accordionContentContainer1.insertAdjacentHTML('beforeend', newSectionNew);
+  createParameters.sectionInsertPoint.insertAdjacentHTML('beforeend', newSectionNew);
   idRefresher(idParameters);
 }
-
-//Adds an event listener for clicking on the button used to create a section and then runs the function.
-//e.preventDefault was needed to stop the function running on page load.
-createSectionButton.addEventListener('click', (e)=>{
-  createSection(defaultCreate, defaultIds)});
 
 function accordionFunction() {
   for (i = 0; i < allAccordions.length; i++) {
@@ -170,6 +159,7 @@ function accordionFunction() {
     });
   }
 }
+/*On resize of browser will trigger and adjust height of accordion to fit new height. Used to prevent resizing creating visual glitches.*/
 accordionFunction()
 function accordionResize(){
   for (i = 0; i < allAccordionContent.length; i++) {
@@ -178,4 +168,9 @@ function accordionResize(){
     }
   }
 }
+/*On resize of browser will trigger function to adjust height of the accordion container*/
 window.addEventListener('resize', accordionResize)
+
+//Adds an event listener for clicking on the button used to create a section and then runs the function.
+createSectionButton.addEventListener('click', ()=>{
+  createSection(defaultCreate, defaultIds)});
