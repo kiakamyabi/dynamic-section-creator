@@ -1,16 +1,17 @@
 //#region General Variables
 //Variable for the div that represents the inside of an accordion. Used as the location for inserting HTML into the DOM.
 const accordionContentContainer1 = document.getElementById('accordion-content-container-1');
+const accordionContentContainer2 = document.getElementById('accordion-content-container-2');
+const allAccordionContentContainer = document.getElementsByClassName('accordion__content-container')
 //Variable for the button that activates the function that creates the sections.
-const createSectionButton = document.getElementById('create-section-btn-1');
+const createSectionButton1 = document.getElementById('create-section-btn-1');
+const createSectionButton2 = document.getElementById('create-section-btn-2');
 //Variable for an array-like object based on the amount of section classes. Used for its length. Updated in real time.
 const allSections = document.getElementsByClassName('accordion__section');
 const allDeleteButtons = document.getElementsByClassName('accordion__delete');
-//Variable to track how many sections are created. Incremented once per section creation.
-let incrementCount = 0;
 //Variable for array-like object of all accordion buttons which represent the opening and closing tab of accordions.
 const allAccordions = document.getElementsByClassName('accordion__button');
-//Variable for array-like object of all accordion content containers to easily adjust the height later.
+//Variable for array-like object of all accordion content containers to mimic the dropdown feature.
 const allAccordionContent = document.getElementsByClassName('accordion__content')
 //#endregion
 
@@ -42,9 +43,8 @@ class IdRefresherParameters{
 }
 
 class CreateElementParameters{
-  constructor(sectionClassName, sectionDataName, sectionInsertPoint){
+  constructor(sectionClassName, sectionInsertPoint){
     this.sectionClassName = sectionClassName;
-    this.sectionDataName = sectionDataName;
     this.sectionInsertPoint = sectionInsertPoint;
   }
 }
@@ -52,7 +52,8 @@ class CreateElementParameters{
 const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
 const defaultIds = new IdRefresherParameters(defaultDelete, allSections, 'section', 'delete', 'url',
  'title', 'summary', 'e.g. Section Title', 'e.g. www.website.com', 'e.g. Summary placeholder information');
-const defaultCreate = new CreateElementParameters('accordion__section', 'data-section-iid', accordionContentContainer1)
+const defaultCreate = new CreateElementParameters('accordion__section', accordionContentContainer1)
+const defaultCreate2 = new CreateElementParameters('accordion__section', accordionContentContainer2)
 //#endregion
 
 /*Resets the id based on the length of an array-like object. Starts at +1 because normally indexed at zero.*/
@@ -127,9 +128,9 @@ function createSection(createParameters, idParameters) {
   if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters');
   }
-  incrementCount++; 
+
   const newSectionNew =
-  `<div class="${createParameters.sectionClassName}" id="" ${createParameters.sectionDataName}="${incrementCount}">
+  `<div class="accordion__section" id="">
     <div>
       <div>
         <label class="title-label" for="">Section Title: </label>
@@ -146,7 +147,13 @@ function createSection(createParameters, idParameters) {
       <textarea rows="5" cols="" id="" placeholder="" name="" required></textarea>
     </div>
   </div>`;
-  createParameters.sectionInsertPoint.insertAdjacentHTML('beforeend', newSectionNew);
+  
+  // for (i = 0; i < allAccordionContentContainer.length; i++){
+  //   allAccordionContentContainer[i].insertAdjacentHTML('beforeend', newSectionNew);
+  // }
+  document.getElementById('create-section-btn-1').parentNode.querySelector('.accordion__content-container').insertAdjacentHTML('beforeend', newSectionNew);
+
+  // createParameters.sectionInsertPoint.insertAdjacentHTML('beforeend', newSectionNew);
   idRefresher(idParameters);
 }
 /*Adds the toggle to the accordion button to allow it to drop down and go up. */
@@ -176,5 +183,5 @@ function accordionResize(){
 window.addEventListener('resize', accordionResize)
 
 //Adds an event listener for clicking on the button used to create a section and then runs the function.
-createSectionButton.addEventListener('click', ()=>{
+createSectionButton1.addEventListener('click', ()=>{
   createSection(defaultCreate, defaultIds)});
