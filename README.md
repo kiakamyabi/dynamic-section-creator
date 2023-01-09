@@ -59,4 +59,3 @@ An accordion thingy component that is dynamic with vanilla JS. Functions are reu
   STEP 8(Optional): If you have changed the IDs and classes you may need to tinker with the CSS the further you have gone from the default layout.
   If you have opted to use a completely different type of template you will need to change the idRefresher function to accept those new elements
   to change their IDs.
- 
