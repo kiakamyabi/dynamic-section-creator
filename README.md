@@ -2,7 +2,7 @@
 
 An accordion thingy component that is dynamic with vanilla JS. Functions are reusable. The functions take an object created by a class as the parameters which creates everything. The comments guide through each function what it does.
 
-  How to add new accordion that is different from the default-
+ # How to add new accordion that is different from the default-
 
   STEP 1: Copy a new accordion set based on the first.
 
