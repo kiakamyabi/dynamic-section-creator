@@ -84,7 +84,21 @@ input{
   text-align: center;
   border-bottom: var(--color-primary-dark) solid 2px;
 }
-
+.accordion__section > :nth-child(1){
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.accordion__section > :nth-child(2){
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: 6px 0;
+}
 .accordion__delete{
   padding: 0.1rem 0.5rem;
   border-radius: 0.4rem;
@@ -96,14 +110,20 @@ input{
   border: var(--color-primary-dark) solid 1px;
   transition: 0.2s;
 }
-.accordion__section > :nth-child(1){
+/* Below is used for the newtype example. */
+.accordion__section-newtype{
+  padding: 0.8rem;
+  text-align: center;
+  border-bottom: var(--color-primary-dark) solid 2px;
+}
+.accordion__section-newtype > :nth-child(1){
   display: flex;
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
   align-items: flex-end;
 }
-.accordion__section > :nth-child(2){
+.accordion__section-newtype > :nth-child(2){
   display: flex;
   flex-direction: column;
   justify-content: center;
