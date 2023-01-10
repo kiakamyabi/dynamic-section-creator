@@ -1,6 +1,6 @@
 //#region General Variables
 //Variable for array-like object of all accordion buttons, which is the big banner pressed to open and close the accordion.
-const allAccordions = document.getElementsByClassName('accordion__button');
+const allAccordionBanners = document.getElementsByClassName('accordion__button');
 
 //Variable for array-like object of all accordion content containers. Used as the height toggle for the accordion.
 const allAccordionContent = document.getElementsByClassName('accordion__content')
@@ -109,12 +109,13 @@ function idRefresher(idParameters){
 
   const sectionTotal = idParameters.sectionTotal;
 
+  const deleteIdName = idParameters.deleteButtonId;
   const urlIdName = idParameters.urlId;
   const titleIdName = idParameters.titleId;
   const summaryIdName = idParameters.summaryId;
 
   for (let i = 0; i < sectionTotal.length; i++){
-    sectionTotal[i].querySelector('button').id = idParameters.deleteButtonId + "-" + (i + 1);
+    sectionTotal[i].querySelector('button').id = deleteIdName + "-" + (i + 1);
 
     sectionTotal[i].querySelector('input[type="url"]').id = urlIdName + "-" + (i + 1);
     sectionTotal[i].querySelector('.url-label').setAttribute('for', urlIdName + "-" + (i + 1));
@@ -178,8 +179,8 @@ function createButtonHandler(buttonEventListenerTarget, createParameters, idPara
 
 /*Adds the toggle to the accordion button to allow it to drop down and go up. */
 function accordionToggle() {
-  for (i = 0; i < allAccordions.length; i++) {
-    allAccordions[i].addEventListener("click", function() {
+  for (i = 0; i < allAccordionBanners.length; i++) {
+    allAccordionBanners[i].addEventListener("click", function() {
       this.classList.toggle("accordion__button--active");
       let panel = this.nextElementSibling;
       if (panel.style.maxHeight) {

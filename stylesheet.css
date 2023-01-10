@@ -34,20 +34,19 @@ input{
   background-color: var(--color-primary);
   cursor: pointer;
 
-  padding: 1rem;
+  padding: 0.5em;
   width: 100%;
   border: none;
   border-bottom: 3px solid var(--color-primary-dark);
 
   color: var(--color-button-hover);
-  font-size: 2rem;
+  font-size: clamp(1rem, 1.7rem, 2.3rem);
   text-shadow: 1px 1px black;
   text-align: center;
 
   transition: 0.3s;
-
-  position: relative;
 }
+
 .accordion__button::after {
   content:var(--accordion-close);
   float: right;

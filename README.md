@@ -1,8 +1,8 @@
-# dynamic-section-creator
+# DSC: Dynamic Section Creator
 
-An accordion thingy component that is dynamic with vanilla JS. Functions are reusable. The functions take an object created by a class as the parameters which creates everything. The comments guide through each function what it does.
+An accordion component thingy that is dynamic with vanilla JS. It exists to teach me the pain of not using a library or framework. Functions are reusable. The functions take an object created by a class as the parameters which creates everything. The comments guide through each function what it does.
 
-  How to add new accordion that is different from the default-
+ # How to add new accordion that is different from the default
 
   STEP 1: Copy a new accordion set based on the first.
 
@@ -17,7 +17,7 @@ An accordion thingy component that is dynamic with vanilla JS. Functions are reu
 
     const allCreateSectionButtons = document.getElementsByClassName('accordion__create-button');
 
-    copy and pasted then changed to:
+   copy and pasted then changed to:
 
     const allCreateSectionButtonsNewtype = document.getElementsByClassName('accordion__create-button-newtype');
 
@@ -26,7 +26,7 @@ An accordion thingy component that is dynamic with vanilla JS. Functions are reu
 
     const defaultCreate = new CreateElementParameters('.accordion__content-container', defaultSection)
 
-    copy and pasted then changed to:
+   copy and pasted then changed to:
 
     const newtypeCreate = new CreateElementParameters('.accordion__content-container', newtypeSection)
 
@@ -40,7 +40,7 @@ An accordion thingy component that is dynamic with vanilla JS. Functions are reu
     const defaultIds = new IdRefresherParameters(defaultDelete, allSections, 'delete', 'url', 'title', 'summary');
     const defaultCreate = new CreateElementParameters('.accordion__content-container', defaultSection)
 
-    copy and pasted then changed to:
+   copy and pasted then changed to:
 
     const newtypeDelete = new DeleteElementParameters(this, '.accordion__section-newtype')
     const newtypeIds = new IdRefresherParameters(newtypeDelete, allSectionsNewtype, 'delete-newtype', 'url-newtype', 'title-newtype', 'summary-newtype');
@@ -50,13 +50,12 @@ An accordion thingy component that is dynamic with vanilla JS. Functions are reu
   created at Step 4 as the 1st argument. In the 2nd argument put the CreateElementParameters class object you created. If you haven't changed
   the ID's at Step 6 you can put defaultIds as the 3rd argument. If you have changed the IDs, put the IdRefresherParameters class object you created.
 
-  createButtonHandler(allCreateSectionButtons, defaultCreate, defaultIds)
+   createButtonHandler(allCreateSectionButtons, defaultCreate, defaultIds)
 
   copy and pasted then changed to:
 
-  createButtonHandler(allCreateSectionButtonsNewtype, newtypeCreate, newtypeIds)
+   createButtonHandler(allCreateSectionButtonsNewtype, newtypeCreate, newtypeIds)
 
   STEP 8(Optional): If you have changed the IDs and classes you may need to tinker with the CSS the further you have gone from the default layout.
   If you have opted to use a completely different type of template you will need to change the idRefresher function to accept those new elements
   to change their IDs.
- 
