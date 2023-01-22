@@ -13,6 +13,7 @@ const allSectionsNewtype = document.getElementsByClassName('accordion__section-n
 const allDeleteButtons = document.getElementsByClassName('accordion__delete');
 const allCreateSectionButtons = document.getElementsByClassName('accordion__create-button');
 const allCreateSectionButtonsNewtype = document.getElementsByClassName('accordion__create-button-newtype');
+const allCreateSectionButtonsDate = document.getElementsByClassName('accordion__create-button-date');
 
 //#endregion
 
@@ -36,7 +37,7 @@ const defaultSection =
     </div>
   </div>`;
 
-  const newtypeSection = 
+const newtypeSection = 
   `<div class="accordion__section-newtype" id="">
   <div>
     <div>
@@ -54,6 +55,23 @@ const defaultSection =
     <textarea rows="5" cols="" id="" placeholder="e.g. Newtype example goes here." name="" required></textarea>
   </div>
 </div>`;
+
+const dateSection = 
+  `<div class="accordion__section-date" id="">
+
+      <div>
+        <label class="date-label" for="">Date Start:</label>
+        <input type="date" name="" id="">
+      </div>
+
+      <div>
+        <label for="">Date End: </label>
+        <input type="date" name="" id="">
+      </div>
+
+      <button type="button" class="accordion__delete">X</button>
+   
+      </div>`;
 //#endregion
 
 //#region Parameter Classes & Objects
@@ -75,6 +93,16 @@ class IdRefresherParameters{
     this.titleId = titleId;
     this.summaryId = summaryId;
 
+  }
+}
+
+class IdRefresherParametersDate{
+  constructor(deleteParameters, sectionTotal, deleteButtonId){
+    this.deleteParameters = deleteParameters;
+
+    this.sectionTotal = sectionTotal;
+
+    this.deleteButtonId = deleteButtonId;
   }
 }
 
@@ -108,8 +136,8 @@ function idRefresher(idParameters){
   }
 
   const sectionTotal = idParameters.sectionTotal;
-
   const deleteIdName = idParameters.deleteButtonId;
+  
   const urlIdName = idParameters.urlId;
   const titleIdName = idParameters.titleId;
   const summaryIdName = idParameters.summaryId;
@@ -129,12 +157,7 @@ function idRefresher(idParameters){
     allDeleteButtons[i].addEventListener('click', function() {
       deleteHandler(this, idParameters, idParameters.deleteParameters);});
   }
-
-  for (i = 0; i < allAccordionContent.length; i++) {
-    if (allAccordionContent[i].style.maxHeight){
-      allAccordionContent[i].style.maxHeight = allAccordionContent[i].scrollHeight + "px";
-    }
-  }
+  accordionResize()
 }
 
 /*Function to find an element, go up its node tree and remove it from the DOM.*/
