@@ -83,9 +83,7 @@ class DeleteElementParameters{
 }
 
 class IdRefresherParameters{
-  constructor(deleteParameters, sectionTotal, deleteButtonId, urlId, titleId, summaryId){
-    this.deleteParameters = deleteParameters;
-
+  constructor(sectionTotal, deleteButtonId, urlId, titleId, summaryId){
     this.sectionTotal = sectionTotal;
 
     this.deleteButtonId = deleteButtonId;
@@ -95,11 +93,8 @@ class IdRefresherParameters{
 
   }
 }
-
 class IdRefresherParametersDate{
-  constructor(deleteParameters, sectionTotal, deleteButtonId){
-    this.deleteParameters = deleteParameters;
-
+  constructor(sectionTotal, deleteButtonId){
     this.sectionTotal = sectionTotal;
 
     this.deleteButtonId = deleteButtonId;
@@ -114,17 +109,17 @@ class CreateElementParameters{
 }
 
 const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
-const defaultIds = new IdRefresherParameters(defaultDelete, allSections, 'delete', 'url', 'title', 'summary');
+const defaultIds = new IdRefresherParameters(allSections, 'delete', 'url', 'title', 'summary');
 const defaultCreate = new CreateElementParameters('.accordion__content-container', defaultSection)
 
 const newtypeDelete = new DeleteElementParameters(this, '.accordion__section-newtype')
-const newtypeIds = new IdRefresherParameters(newtypeDelete, allSectionsNewtype, 'delete-newtype', 'url-newtype', 'title-newtype', 'summary-newtype');
+const newtypeIds = new IdRefresherParameters(allSectionsNewtype, 'delete-newtype', 'url-newtype', 'title-newtype', 'summary-newtype');
 const newtypeCreate = new CreateElementParameters('.accordion__content-container-newtype', newtypeSection)
 
 
 //#endregion
 
-/*Resets the id based on the length of an array-like object. Starts at +1 because normally indexed at zero.*/
+/*Resets the id based on the length of an array-like object.*/
 //Parameters:
 //sectionTotal = Array-like object of sections being used for its length.
 //containerId = The ID name of the section that will contain all the created elements.
@@ -132,7 +127,6 @@ const newtypeCreate = new CreateElementParameters('.accordion__content-container
 //*Placeholder = Placeholder information put in the input box.
 function idRefresher(idParameters){
   if (idParameters instanceof IdRefresherParameters){
-
     const sectionTotal = idParameters.sectionTotal;
     const deleteIdName = idParameters.deleteButtonId;
 
@@ -151,9 +145,6 @@ function idRefresher(idParameters){
 
       sectionTotal[i].querySelector('textarea').id = summaryIdName + "-" + (i + 1);
       sectionTotal[i].querySelector('.summary-label').setAttribute('for', summaryIdName + "-" + (i + 1));
-      
-      allDeleteButtons[i].addEventListener('click', function() {
-        deleteHandler(this, idParameters, idParameters.deleteParameters);});
     }
     accordionResize()
 }
@@ -164,9 +155,6 @@ function idRefresher(idParameters){
 
     for (let i = 0; i < sectionTotal.length; i++){
       sectionTotal[i].querySelector('button').id = deleteIdName + "-" + (i + 1);
-      
-      allDeleteButtons[i].addEventListener('click', function() {
-        deleteHandler(this, idParameters, idParameters.deleteParameters);});
     }
     accordionResize()
 }
@@ -193,26 +181,31 @@ Then uses the idRefresher callback function to reset all the id's of the current
 //Parameters:
 //sectionCreateLocation = The location where the created HTML is placed.
 //createdContent = The template of the HTML being created in the form of a template literal.
-function createSection(element, createParameters, idParameters) {
+function createSection(element, createParameters, idParameters, deleteParameters) {
   if (!(createParameters instanceof CreateElementParameters)) {
-    throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters & idParameters must be an instance of the class IdRefresherParameters');
+    throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters');
   }
 
   element.parentNode.querySelector(createParameters.sectionCreateLocation).insertAdjacentHTML('beforeend', createParameters.createdContent);
   idRefresher(idParameters);
+
+  for (let i = 0; i < allDeleteButtons.length; i++){
+    allDeleteButtons[i].addEventListener('click', function() {
+      deleteHandler(this, idParameters, deleteParameters);});
+  }
 }
 
 /*Loops based on the length of an array-like object of Create Section buttons and adds the event listeners to them*/
 //Parameters:
 //buttonEventListenerTarget = Array-like object made from class of create section buttons. 
-function createButtonHandler(buttonEventListenerTarget, createParameters, idParameters){
+function createButtonHandler(buttonEventListenerTarget, createParameters, idParameters, deleteParameters){
   if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters & idParameters must be an instance of the class IdRefresherParameters');
   }
 
   for (let i = 0; i < buttonEventListenerTarget.length; i++){
     buttonEventListenerTarget[i].addEventListener('click', function() {
-      createSection(this, createParameters, idParameters);});
+      createSection(this, createParameters, idParameters, deleteParameters);});
   }
 }
 
@@ -245,8 +238,8 @@ window.addEventListener('resize', accordionResize)
 //Used in an event listener on DOM load to run needed callback functions.
 function onDomLoad(){
   accordionToggle()
-  createButtonHandler(allCreateSectionButtons, defaultCreate, defaultIds)
-  createButtonHandler(allCreateSectionButtonsNewtype, newtypeCreate, newtypeIds)
+  createButtonHandler(allCreateSectionButtons, defaultCreate, defaultIds, defaultDelete)
+  createButtonHandler(allCreateSectionButtonsNewtype, newtypeCreate, newtypeIds, newtypeDelete)
 }
 //On DOM load will run needed functions.
 document.addEventListener('DOMContentLoaded', onDomLoad); 
