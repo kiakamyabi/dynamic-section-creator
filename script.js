@@ -131,33 +131,49 @@ const newtypeCreate = new CreateElementParameters('.accordion__content-container
 //*IdName = The ID name that has the index added to it to make it unique.
 //*Placeholder = Placeholder information put in the input box.
 function idRefresher(idParameters){
-  if (!(idParameters instanceof IdRefresherParameters)) {
-    throw new Error('Invalid argument: idParameters must be an instance of the class IdRefresherParameters');
-  }
+  if (idParameters instanceof IdRefresherParameters){
 
-  const sectionTotal = idParameters.sectionTotal;
-  const deleteIdName = idParameters.deleteButtonId;
-  
-  const urlIdName = idParameters.urlId;
-  const titleIdName = idParameters.titleId;
-  const summaryIdName = idParameters.summaryId;
+    const sectionTotal = idParameters.sectionTotal;
+    const deleteIdName = idParameters.deleteButtonId;
 
-  for (let i = 0; i < sectionTotal.length; i++){
-    sectionTotal[i].querySelector('button').id = deleteIdName + "-" + (i + 1);
+    const urlIdName = idParameters.urlId;
+    const titleIdName = idParameters.titleId;
+    const summaryIdName = idParameters.summaryId;
 
-    sectionTotal[i].querySelector('input[type="url"]').id = urlIdName + "-" + (i + 1);
-    sectionTotal[i].querySelector('.url-label').setAttribute('for', urlIdName + "-" + (i + 1));
+    for (let i = 0; i < sectionTotal.length; i++){
+      sectionTotal[i].querySelector('.accordion__delete').id = deleteIdName + "-" + (i + 1);
 
-    sectionTotal[i].querySelector('input[type="text"]').id = titleIdName + "-" + (i + 1);
-    sectionTotal[i].querySelector('.title-label').setAttribute('for', titleIdName + "-" + (i + 1));
+      sectionTotal[i].querySelector('input[type="url"]').id = urlIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.url-label').setAttribute('for', urlIdName + "-" + (i + 1));
 
-    sectionTotal[i].querySelector('textarea').id = summaryIdName + "-" + (i + 1);
-    sectionTotal[i].querySelector('.summary-label').setAttribute('for', summaryIdName + "-" + (i + 1));
-    
-    allDeleteButtons[i].addEventListener('click', function() {
-      deleteHandler(this, idParameters, idParameters.deleteParameters);});
-  }
-  accordionResize()
+      sectionTotal[i].querySelector('input[type="text"]').id = titleIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.title-label').setAttribute('for', titleIdName + "-" + (i + 1));
+
+      sectionTotal[i].querySelector('textarea').id = summaryIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.summary-label').setAttribute('for', summaryIdName + "-" + (i + 1));
+      
+      allDeleteButtons[i].addEventListener('click', function() {
+        deleteHandler(this, idParameters, idParameters.deleteParameters);});
+    }
+    accordionResize()
+}
+  else if(idParameters instanceof IdRefresherParametersDate){
+
+    const sectionTotal = idParameters.sectionTotal;
+    const deleteIdName = idParameters.deleteButtonId;
+
+    for (let i = 0; i < sectionTotal.length; i++){
+      sectionTotal[i].querySelector('button').id = deleteIdName + "-" + (i + 1);
+      
+      allDeleteButtons[i].addEventListener('click', function() {
+        deleteHandler(this, idParameters, idParameters.deleteParameters);});
+    }
+    accordionResize()
+}
+
+  else {throw new Error(
+  'Invalid argument: idParameters must be an instance of the class IdRefresherParameters or IdRefresherParametersDate');}
+
 }
 
 /*Function to find an element, go up its node tree and remove it from the DOM.*/
@@ -165,7 +181,7 @@ function idRefresher(idParameters){
 //element = Where the .closest begins its search.
 //selector = The selector that points to where the search will conclude like a queryselector.
 function deleteHandler(element, idParameters, deleteParameters) {
-  if (!(deleteParameters instanceof DeleteElementParameters) && !(idParameters instanceof IdRefresherParameters)){
+  if (!(deleteParameters instanceof DeleteElementParameters)){
     throw new Error('Invalid argument: deleteParameters must be an instance of the class DeleteElementParameters & idParameters must be an instance of the class IdRefresherParameters');
   }
   element.closest(deleteParameters.selector).remove();
@@ -178,7 +194,7 @@ Then uses the idRefresher callback function to reset all the id's of the current
 //sectionCreateLocation = The location where the created HTML is placed.
 //createdContent = The template of the HTML being created in the form of a template literal.
 function createSection(element, createParameters, idParameters) {
-  if (!(createParameters instanceof CreateElementParameters) && !(idParameters instanceof IdRefresherParameters)) {
+  if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters & idParameters must be an instance of the class IdRefresherParameters');
   }
 
@@ -190,7 +206,7 @@ function createSection(element, createParameters, idParameters) {
 //Parameters:
 //buttonEventListenerTarget = Array-like object made from class of create section buttons. 
 function createButtonHandler(buttonEventListenerTarget, createParameters, idParameters){
-  if (!(createParameters instanceof CreateElementParameters) && !(idParameters instanceof IdRefresherParameters)) {
+  if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters & idParameters must be an instance of the class IdRefresherParameters');
   }
 
