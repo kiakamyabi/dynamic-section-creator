@@ -8,9 +8,11 @@ const allAccordionContent = document.getElementsByClassName('accordion__content'
 //Variable for an array-like object based on the amount of section classes. Used for its length.
 const allSections = document.getElementsByClassName('accordion__section');
 const allSectionsNewtype = document.getElementsByClassName('accordion__section-newtype');
+const allSectionsDate = document.getElementsByClassName('accordion__section-date');
 
 //Array-like objects of button classes.
 const allDeleteButtons = document.getElementsByClassName('accordion__delete');
+
 const allCreateSectionButtons = document.getElementsByClassName('accordion__create-button');
 const allCreateSectionButtonsNewtype = document.getElementsByClassName('accordion__create-button-newtype');
 const allCreateSectionButtonsDate = document.getElementsByClassName('accordion__create-button-date');
@@ -60,13 +62,13 @@ const dateSection =
   `<div class="accordion__section-date" id="">
 
       <div>
-        <label class="date-label" for="">Date Start:</label>
-        <input type="date" name="" id="">
+        <label class="date-start-label" for="">Date Start:</label>
+        <input class="date-start" type="date" name="" id="">
       </div>
 
       <div>
-        <label for="">Date End: </label>
-        <input type="date" name="" id="">
+        <label class="date-end-label" for="">Date End: </label>
+        <input class="date-end" type="date" name="" id="">
       </div>
 
       <button type="button" class="accordion__delete">X</button>
@@ -85,8 +87,8 @@ class DeleteElementParameters{
 class IdRefresherParameters{
   constructor(sectionTotal, deleteButtonId, urlId, titleId, summaryId){
     this.sectionTotal = sectionTotal;
-
     this.deleteButtonId = deleteButtonId;
+
     this.urlId = urlId;
     this.titleId = titleId;
     this.summaryId = summaryId;
@@ -94,10 +96,14 @@ class IdRefresherParameters{
   }
 }
 class IdRefresherParametersDate{
-  constructor(sectionTotal, deleteButtonId){
+  constructor(sectionTotal, deleteButtonId, dateStartId, dateEndId){
     this.sectionTotal = sectionTotal;
-
     this.deleteButtonId = deleteButtonId;
+
+    this.dateStartId = dateStartId;
+    this.dateEndId = dateEndId;
+
+
   }
 }
 
@@ -108,13 +114,17 @@ class CreateElementParameters{
   }
 }
 
-const defaultDelete = new DeleteElementParameters(this, '.accordion__section')
+const defaultDelete = new DeleteElementParameters(this, '.accordion__section');
 const defaultIds = new IdRefresherParameters(allSections, 'delete', 'url', 'title', 'summary');
-const defaultCreate = new CreateElementParameters('.accordion__content-container', defaultSection)
+const defaultCreate = new CreateElementParameters('.accordion__content-container', defaultSection);
 
-const newtypeDelete = new DeleteElementParameters(this, '.accordion__section-newtype')
+const newtypeDelete = new DeleteElementParameters(this, '.accordion__section-newtype');
 const newtypeIds = new IdRefresherParameters(allSectionsNewtype, 'delete-newtype', 'url-newtype', 'title-newtype', 'summary-newtype');
-const newtypeCreate = new CreateElementParameters('.accordion__content-container-newtype', newtypeSection)
+const newtypeCreate = new CreateElementParameters('.accordion__content-container-newtype', newtypeSection);
+
+const dateDelete = new DeleteElementParameters(this, '.accordion__section-date');
+const dateIds = new IdRefresherParametersDate(allSectionsDate, 'delete-date', 'date-start', 'date-end');
+const dateCreate = new CreateElementParameters('.accordion__content-container-date', dateSection);
 
 
 //#endregion
@@ -147,14 +157,26 @@ function idRefresher(idParameters){
       sectionTotal[i].querySelector('.summary-label').setAttribute('for', summaryIdName + "-" + (i + 1));
     }
     accordionResize()
-}
+  }
   else if(idParameters instanceof IdRefresherParametersDate){
-
     const sectionTotal = idParameters.sectionTotal;
     const deleteIdName = idParameters.deleteButtonId;
 
+    const dateStartId = idParameters.dateStartId;
+    const dateEndId = idParameters.dateEndId;
+
+
     for (let i = 0; i < sectionTotal.length; i++){
-      sectionTotal[i].querySelector('button').id = deleteIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.accordion__delete').id = deleteIdName + "-" + (i + 1);
+
+      sectionTotal[i].querySelector('.date-start').id = dateStartId + "-" + (i + 1);
+      sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateStartId + "-" + (i + 1));
+
+      sectionTotal[i].querySelector('.date-end').id = dateEndId + "-" + (i + 1);
+      sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateEndId + "-" + (i + 1));
+
+
+
     }
     accordionResize()
 }
@@ -240,6 +262,7 @@ function onDomLoad(){
   accordionToggle()
   createButtonHandler(allCreateSectionButtons, defaultCreate, defaultIds, defaultDelete)
   createButtonHandler(allCreateSectionButtonsNewtype, newtypeCreate, newtypeIds, newtypeDelete)
+  createButtonHandler(allCreateSectionButtonsDate, dateCreate, dateIds, dateDelete)
 }
 //On DOM load will run needed functions.
 document.addEventListener('DOMContentLoaded', onDomLoad); 
