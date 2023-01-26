@@ -71,6 +71,15 @@ const dateSection =
         <input class="date-end" type="date" name="" id="">
       </div>
 
+      <label class="" for="">Example Title:</label>
+      <input class="" type="text" name="" id="">
+
+      <label class="" for="">Example Title 2:</label>
+      <input class="" type="text" name="" id="">
+
+      <label for="">Example Textarea: </label>
+      <textarea rows="5" cols="" name="" id="" ></textarea>
+
       <button type="button" class="accordion__delete">X</button>
    
       </div>`;
