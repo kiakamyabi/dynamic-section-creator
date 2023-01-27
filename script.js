@@ -71,13 +71,13 @@ const dateSection =
         <input class="date-end" type="date" name="" id="">
       </div>
 
-      <label class="" for="">Example Title:</label>
-      <input class="" type="text" name="" id="">
+      <label class="title-a-label" for="">Example Title A:</label>
+      <input class="title-a" type="text" name="" id="">
 
-      <label class="" for="">Example Title 2:</label>
-      <input class="" type="text" name="" id="">
+      <label class="title-b-label" for="">Example Title B:</label> 
+      <input class="title-b" type="text" name="" id="">
 
-      <label for="">Example Textarea: </label>
+      <label class="textarea-example-label" for="">Example Textarea:</label>
       <textarea rows="5" cols="" name="" id="" ></textarea>
 
       <button type="button" class="accordion__delete">X</button>
@@ -105,12 +105,17 @@ class IdRefresherParameters{
   }
 }
 class IdRefresherParametersDate{
-  constructor(sectionTotal, deleteButtonId, dateStartId, dateEndId){
+  constructor(sectionTotal, deleteButtonId, dateStartId, dateEndId, titleAId, titleBId, textareaExampleId){
     this.sectionTotal = sectionTotal;
     this.deleteButtonId = deleteButtonId;
 
     this.dateStartId = dateStartId;
     this.dateEndId = dateEndId;
+
+    this.titleAId = titleAId;
+    this.titleBId = titleBId;
+
+    this.textareaExampleId = textareaExampleId;
 
 
   }
@@ -132,7 +137,7 @@ const newtypeIds = new IdRefresherParameters(allSectionsNewtype, 'delete-newtype
 const newtypeCreate = new CreateElementParameters('.accordion__content-container-newtype', newtypeSection);
 
 const dateDelete = new DeleteElementParameters(this, '.accordion__section-date');
-const dateIds = new IdRefresherParametersDate(allSectionsDate, 'delete-date', 'date-start', 'date-end');
+const dateIds = new IdRefresherParametersDate(allSectionsDate, 'delete-date', 'date-start', 'date-end', 'title-a', 'title-b', 'textarea-example');
 const dateCreate = new CreateElementParameters('.accordion__content-container-date', dateSection);
 
 
@@ -141,9 +146,7 @@ const dateCreate = new CreateElementParameters('.accordion__content-container-da
 /*Resets the id based on the length of an array-like object.*/
 //Parameters:
 //sectionTotal = Array-like object of sections being used for its length.
-//containerId = The ID name of the section that will contain all the created elements.
 //*IdName = The ID name that has the index added to it to make it unique.
-//*Placeholder = Placeholder information put in the input box.
 function idRefresher(idParameters){
   if (idParameters instanceof IdRefresherParameters){
     const sectionTotal = idParameters.sectionTotal;
@@ -164,6 +167,7 @@ function idRefresher(idParameters){
 
       sectionTotal[i].querySelector('textarea').id = summaryIdName + "-" + (i + 1);
       sectionTotal[i].querySelector('.summary-label').setAttribute('for', summaryIdName + "-" + (i + 1));
+      
     }
     accordionResize()
   }
@@ -173,6 +177,11 @@ function idRefresher(idParameters){
 
     const dateStartId = idParameters.dateStartId;
     const dateEndId = idParameters.dateEndId;
+
+    const titleAId = idParameters.titleAId;
+    const titleBId = idParameters.titleBId;
+
+    const textareaExampleId = idParameters.textareaExampleId;
 
 
     for (let i = 0; i < sectionTotal.length; i++){
@@ -184,7 +193,14 @@ function idRefresher(idParameters){
       sectionTotal[i].querySelector('.date-end').id = dateEndId + "-" + (i + 1);
       sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateEndId + "-" + (i + 1));
 
+      sectionTotal[i].querySelector('.title-a').id = titleAId + "-" + (i + 1);
+      sectionTotal[i].querySelector('.title-a-label').setAttribute('for', titleAId + "-" + (i + 1));
 
+      sectionTotal[i].querySelector('.title-b').id = titleBId + "-" + (i + 1);
+      sectionTotal[i].querySelector('.title-b-label').setAttribute('for', titleBId + "-" + (i + 1));
+
+      sectionTotal[i].querySelector('textarea').id = textareaExampleId + "-" + (i + 1);
+      sectionTotal[i].querySelector('.textarea-example-label').setAttribute('for', textareaExampleId + "-" + (i + 1));
 
     }
     accordionResize()
