@@ -151,7 +151,8 @@ const dateCreate = new CreateElementParameters('.accordion__content-container-da
 
 //#endregion
 
-/*Resets the id based on the length of an array-like object.*/
+/*Resets the ids based on the length of an array-like object. Takes an object made from a class as a parameter. Depending on which class is
+used it will change the ids of a specific section. If the specific class objects aren't used as an argument it will cause an error.*/
 //Parameters:
 //sectionTotal = Array-like object of sections being used for its length.
 //*IdName = The ID name that has the index added to it to make it unique.
@@ -183,32 +184,32 @@ function idRefresher(idParameters){
     const sectionTotal = idParameters.sectionTotal;
     const deleteIdName = idParameters.deleteButtonId;
 
-    const dateStartId = idParameters.dateStartId;
-    const dateEndId = idParameters.dateEndId;
+    const dateStartIdName = idParameters.dateStartId;
+    const dateEndIdName = idParameters.dateEndId;
 
-    const titleAId = idParameters.titleAId;
-    const titleBId = idParameters.titleBId;
+    const titleAIdName = idParameters.titleAId;
+    const titleBIdName = idParameters.titleBId;
 
-    const textareaExampleId = idParameters.textareaExampleId;
+    const textareaExampleIdName = idParameters.textareaExampleId;
 
 
     for (let i = 0; i < sectionTotal.length; i++){
       sectionTotal[i].querySelector('.accordion__delete').id = deleteIdName + "-" + (i + 1);
 
-      sectionTotal[i].querySelector('.date-start').id = dateStartId + "-" + (i + 1);
-      sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateStartId + "-" + (i + 1));
+      sectionTotal[i].querySelector('.date-start').id = dateStartIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateStartIdName + "-" + (i + 1));
 
-      sectionTotal[i].querySelector('.date-end').id = dateEndId + "-" + (i + 1);
-      sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateEndId + "-" + (i + 1));
+      sectionTotal[i].querySelector('.date-end').id = dateEndIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.date-start-label').setAttribute('for', dateEndIdName + "-" + (i + 1));
 
-      sectionTotal[i].querySelector('.title-a').id = titleAId + "-" + (i + 1);
-      sectionTotal[i].querySelector('.title-a-label').setAttribute('for', titleAId + "-" + (i + 1));
+      sectionTotal[i].querySelector('.title-a').id = titleAIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.title-a-label').setAttribute('for', titleAIdName + "-" + (i + 1));
 
-      sectionTotal[i].querySelector('.title-b').id = titleBId + "-" + (i + 1);
-      sectionTotal[i].querySelector('.title-b-label').setAttribute('for', titleBId + "-" + (i + 1));
+      sectionTotal[i].querySelector('.title-b').id = titleBIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.title-b-label').setAttribute('for', titleBIdName + "-" + (i + 1));
 
-      sectionTotal[i].querySelector('textarea').id = textareaExampleId + "-" + (i + 1);
-      sectionTotal[i].querySelector('.textarea-example-label').setAttribute('for', textareaExampleId + "-" + (i + 1));
+      sectionTotal[i].querySelector('textarea').id = textareaExampleIdName + "-" + (i + 1);
+      sectionTotal[i].querySelector('.textarea-example-label').setAttribute('for', textareaExampleIdName + "-" + (i + 1));
 
     }
     accordionResize()
@@ -219,23 +220,27 @@ function idRefresher(idParameters){
 
 }
 
-/*Function to find an element, go up its node tree and remove it from the DOM.*/
+/*Callback function to find an element, go up its node tree and remove it from the DOM. Used in the createSection function.*/
 //Parameters:
 //element = Where the .closest begins its search.
-//selector = The selector that points to where the search will conclude like a queryselector.
+//idParameters = Class object used as argument. For idRefresher callback.
+//deleteParameters = Class object used as argument. Contains selector and optionally the element.
 function deleteHandler(element, idParameters, deleteParameters) {
   if (!(deleteParameters instanceof DeleteElementParameters)){
-    throw new Error('Invalid argument: deleteParameters must be an instance of the class DeleteElementParameters & idParameters must be an instance of the class IdRefresherParameters');
+    throw new Error('Invalid argument: deleteParameters must be an instance of the class DeleteElementParameters');
   }
   element.closest(deleteParameters.selector).remove();
   idRefresher(idParameters)
 }
 
-/*Takes a template literal of html elements and then inserts it into the DOM at a specific location.
-Then uses the idRefresher callback function to reset all the id's of the current elements.*/
+/*Callback function. Takes a template literal of html elements and then inserts it into the DOM at a specific location. Then uses the
+idRefresher callback to reset all the id's of the current elements. Then adds an event listener for all delete buttons with
+deleteHandler callback.*/
 //Parameters:
-//sectionCreateLocation = The location where the created HTML is placed.
-//createdContent = The template of the HTML being created in the form of a template literal.
+//element = Where the .closest begins its search.For deleteHandler callback.
+//createParameters = Class object used as argument. Contains the the HTML template literal and the location where it wille be created.
+//idParameters = Class object used as argument. For idRefresher callback.
+//deleteParameters = Class object used as argument. for deleteHandler callback.
 function createSection(element, createParameters, idParameters, deleteParameters) {
   if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters');
@@ -252,7 +257,10 @@ function createSection(element, createParameters, idParameters, deleteParameters
 
 /*Loops based on the length of an array-like object of Create Section buttons and adds the event listeners to them*/
 //Parameters:
-//buttonEventListenerTarget = Array-like object made from class of create section buttons. 
+//buttonEventListenerTarget = Array-like object made from class of create section buttons.
+//createParameters = Class object used as argument. For createSection callback.
+//idParameters =  Class object used as argument. For idRefresher callback.
+//deleteParameters = Class object used as argument. For deleteHandler callback.
 function createButtonHandler(buttonEventListenerTarget, createParameters, idParameters, deleteParameters){
   if (!(createParameters instanceof CreateElementParameters)) {
     throw new Error('Invalid argument: createParameters must be an instance of the class CreateElementParameters & idParameters must be an instance of the class IdRefresherParameters');
