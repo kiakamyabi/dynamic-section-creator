@@ -130,3 +130,37 @@ input{
   margin-inline: auto;
   padding: 6px 0;
 }
+
+/* Below is used for the date section example. */
+.accordion__section-date{
+  padding: 0.8rem;
+  text-align: center;
+  border-bottom: var(--color-primary-dark) solid 2px;
+}
+.accordion__section-date > :nth-child(1){
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.date-start, .date-end{
+  max-width: 10rem;
+}
+.accordion__section-date > :nth-child(2), .accordion__section-date > :nth-child(3){
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 30rem;
+  margin-inline: auto;
+  padding: 6px 0;
+}
+.accordion__section-date > :nth-child(4){
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: 6px 0; 
+}
+

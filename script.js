@@ -5,7 +5,7 @@ const allAccordionBanners = document.getElementsByClassName('accordion__button')
 //Variable for array-like object of all accordion content containers. Used as the height toggle for the accordion.
 const allAccordionContent = document.getElementsByClassName('accordion__content')
 
-//Variable for an array-like object based on the amount of section classes. Used for its length.
+//Variable for an array-like object based on the amount of sections of a type of template. Used for its length.
 const allSections = document.getElementsByClassName('accordion__section');
 const allSectionsNewtype = document.getElementsByClassName('accordion__section-newtype');
 const allSectionsDate = document.getElementsByClassName('accordion__section-date');
@@ -61,6 +61,7 @@ const newtypeSection =
 const dateSection = 
   `<div class="accordion__section-date" id="">
 
+    <div>
       <div>
         <label class="date-start-label" for="">Date Start:</label>
         <input class="date-start" type="date" name="" id="">
@@ -70,15 +71,22 @@ const dateSection =
         <label class="date-end-label" for="">Date End: </label>
         <input class="date-end" type="date" name="" id="">
       </div>
+    </div>
 
-      <label class="title-a-label" for="">Example Title A:</label>
-      <input class="title-a" type="text" name="" id="">
+      <div>
+        <label class="title-a-label" for="">Example Title A:</label>
+        <input class="title-a" type="text" name="" id="" placeholder="e.g. Title A">
+      </div>
 
-      <label class="title-b-label" for="">Example Title B:</label> 
-      <input class="title-b" type="text" name="" id="">
+      <div>
+        <label class="title-b-label" for="">Example Title B:</label> 
+        <input class="title-b" type="text" name="" id="" placeholder="e.g. Title B">
+      </div>
 
-      <label class="textarea-example-label" for="">Example Textarea:</label>
-      <textarea rows="5" cols="" name="" id="" ></textarea>
+      <div>
+        <label class="textarea-example-label" for="">Example Textarea:</label>
+        <textarea rows="5" cols="" name="" id="" placeholder="e.g. Date section example goes here."></textarea>
+      </div>
 
       <button type="button" class="accordion__delete">X</button>
    
